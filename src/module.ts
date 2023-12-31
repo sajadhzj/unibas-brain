@@ -1,5 +1,5 @@
-import {defineNuxtModule, createResolver, installModule, addImports, addImportsDir} from '@nuxt/kit'
-import {defu} from 'defu'
+import {defineNuxtModule, createResolver, installModule, addImportsDir} from '@nuxt/kit'
+import {defu} from "defu";
 
 // Module options TypeScript interface definition
 export interface ModuleOptions {
@@ -16,7 +16,7 @@ export default defineNuxtModule<ModuleOptions>({
   async setup(options, nuxt: any) {
     //@ts-ignore
     const resolver = createResolver(import.meta.url)
-    const handleUndefined = (config , value)=>{
+    const handleUndefined = (config: any , value: any)=>{
       if (typeof config === 'undefined')
         return value
 
@@ -24,13 +24,11 @@ export default defineNuxtModule<ModuleOptions>({
     }
 
     nuxt.options.app.head.title = handleUndefined(nuxt.options.unibasBrain?.seo?.title , 'UNIBAS')
-    nuxt.options.app.head.meta = [
-      {
-        hid: 'description',
-        name: 'description',
-        content: handleUndefined(nuxt.options.unibasBrain?.seo?.description , 'unibas brain module')
-      }
-    ]
+    nuxt.options.app.head.meta.push({
+      hid: 'description',
+      name: 'description',
+      content: handleUndefined(nuxt.options.unibasBrain?.seo?.description , 'unibas brain module')
+    })
     nuxt.options.runtimeConfig.public.unibasBrain = defu(nuxt.options.runtimeConfig.public.unibasBrain,
       {
         baseURL:nuxt.options.unibasBrain?.baseURL,
@@ -52,19 +50,13 @@ export default defineNuxtModule<ModuleOptions>({
         }
       })
 
-    nuxt.hook('nitro:config' , async (nitro) => {
+    nuxt.hook('nitro:config' , async (nitro: any) => {
       nitro.publicAssets.push({
         dir:resolver.resolve('./runtime/public')
       })
     })
 
-    addImportsDir(resolver.resolve('runtime/composable/useUnibasHelper'))
-
-    addImports({
-      name: 'useUnibasHelper',
-      as: 'useUnibasHelper',
-      from: resolver.resolve('runtime/store/AuthStore')
-    })
+    addImportsDir(resolver.resolve('runtime/composables'))
 
     await installModule('@pinia/nuxt', {
       autoImports: ["defineStore", ["defineStore", "definePiniaStore"]],

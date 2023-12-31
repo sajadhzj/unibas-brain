@@ -1,5 +1,5 @@
 export default defineNuxtConfig({
-  modules: ['../src/module'],
+  modules: ['unibas-brain'],
   unibasBrain:{
     baseURL:process.env.BASE_URL,
     seo:{
