@@ -1,18 +1,10 @@
 {
   "name": "unibas-brain",
-  "version": "0.2.3",
-  "description": "unibas brain module , start fast and optimize develop your project",
+  "version": "0.2.5",
+  "description": "unibas brain nuxt module , start fast and optimize develop your project",
   "repository": "sajadhzj/unibas-brain",
   "author": "sajad hossein zadeh (https://github.com/sajadhzj)",
   "license": "MIT",
-  "type": "module",
-  "exports": {
-    ".": {
-      "types": "./dist/types.d.ts",
-      "import": "./dist/module.mjs",
-      "require": "./dist/module.cjs"
-    }
-  },
   "main": "./dist/module.cjs",
   "types": "./dist/types.d.ts",
   "files": [
